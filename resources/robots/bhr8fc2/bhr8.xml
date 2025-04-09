@@ -1,0 +1,105 @@
+<mujoco model="bhr8_fc2">
+  <compiler angle="radian" meshdir="meshes/"/>
+  <!-- <asset>
+    <texture type="skybox" builtin="flat" rgb1="0 0 0" rgb2="0 0 0" width="512" height="3072"/>
+    <texture type="2d" name="groundplane" builtin="checker" mark="edge" rgb1="0.2 0.3 0.4" rgb2="0.1 0.2 0.3" markrgb="0.8 0.8 0.8" width="300" height="300"/>
+    <material name="groundplane" texture="groundplane" texuniform="true" texrepeat="5 5" reflectance="0.2" />
+  </asset> -->
+  <worldbody>
+  <body name="torso" pos="0 0 1.5">
+      <!-- <freejoint name="root"/> -->
+      <inertial pos="-0.01 0 0.303214317947705" quat="1 0 0 0" mass="23.1" diaginertia="0.71 0.60 0.24" />
+      <joint name="floating_base_joint" type="free" limited="false" actuatorfrclimited="false"/>
+    <geom size="0.05 0.14 0.28" pos="0 0 0.25" type="box" rgba="0.752941 0.752941 0.752941 1"/>
+    <geom size="0.047 0.035" pos="-0.13625 -0.21476 0.389" quat="0.707388 0 0.706825 0" type="cylinder" rgba="0.752941 0.752941 0.752941 1"/>
+    <geom size="0.047 0.035" pos="-0.02525 -0.219 0.389" type="cylinder" rgba="0.752941 0.752941 0.752941 1"/>
+    <geom size="0.042 0.1" pos="-0.02625 -0.219 0.189" type="cylinder" rgba="0.752941 0.752941 0.752941 1"/>
+    <geom size="0.018 0.125" pos="0.123686 -0.229 0.0401399" quat="0.696707 0 -0.717356 0" type="cylinder" rgba="0.752941 0.752941 0.752941 1"/>
+    <geom size="0.047 0.035" pos="-0.13625 0.05476 0.389" quat="0.707388 0 0.706825 0" type="cylinder" rgba="0.752941 0.752941 0.752941 1"/>
+    <geom size="0.047 0.035" pos="-0.02525 0.219 0.389" type="cylinder" rgba="0.752941 0.752941 0.752941 1"/>
+    <geom size="0.042 0.1" pos="-0.02625 0.219 0.189" type="cylinder" rgba="0.752941 0.752941 0.752941 1"/>
+    <geom size="0.018 0.125" pos="0.123686 0.229 0.0401399" quat="0.696707 0 -0.717356 0" type="cylinder" rgba="0.752941 0.752941 0.752941 1"/>
+    <body name="rhip1" pos="0 -0.1 0.02324">
+      <inertial pos="-0.078509 0 -0.118031" quat="0.312936 0.634303 0.633788 0.313119" mass="2.38958" diaginertia="0.011987 0.0111943 0.00318774"/>
+      <joint name="rhipYaw" pos="0 0 0" axis="0 0 1" range="-3.14 3.14" actuatorfrcrange="-100 100"/>
+      <geom size="0.05 0.03" pos="-0.11 0 -0.14" quat="0.707388 0 0.706825 0" type="cylinder" rgba="0.752941 0.752941 0.752941 1"/>
+      <body name="rhip2" pos="-0.054 0 -0.13924">
+        <inertial pos="0.051206 -0.00273 -0.000288" quat="-0.0508471 0.718896 0.0506336 0.691404" mass="2.50709" diaginertia="0.0040419 0.00361648 0.00344663"/>
+        <joint name="rhipRoll" pos="0 0 0" axis="1 0 0" range="-3.14 3.14" actuatorfrcrange="-100 100"/>
+        <geom size="0.05 0.04" pos="0.05 0 0" quat="0.707388 0.706825 0 0" type="cylinder" rgba="0.752941 0.752941 0.752941 1"/>
+        <body name="rthigh" pos="0.055 -0.0001 0">
+          <inertial pos="0.005701 -0.002335 -0.170006" quat="0.999478 -0.00792791 -0.00348956 0.0311153" mass="3.09646" diaginertia="0.0430693 0.0409464 0.00582637"/>
+          <joint name="rhipPitch" pos="0 0 0" axis="0 1 0" range="-3.14 3.14" actuatorfrcrange="-100 100"/>
+          <geom size="0.05 0.05 0.16" pos="0 0 -0.23" type="box" rgba="0.752941 0.752941 0.752941 1"/>
+          <body name="rcalf" pos="0 0 -0.375">
+            <inertial pos="0.003761 0 -0.143175" quat="0.99988 -0.000702889 -0.0153326 0.00193635" mass="1.91427" diaginertia="0.0176306 0.017018 0.00210037"/>
+            <joint name="rknee" pos="0 0 0" axis="0 1 0" range="-3.14 3.14" actuatorfrcrange="-100 100"/>
+            <geom size="0.04 0.04 0.1" pos="0 0 -0.18" type="box" rgba="0.752941 0.752941 0.752941 1"/>
+            <body name="rankle" pos="0 0 -0.35">
+              <inertial pos="-0.025377 0.000124 0.003585" quat="0.501406 0.49859 0.49859 0.501406" mass="0.139581" diaginertia="0.00117 0.00111002 0.000399977"/>
+              <joint name="rankle1" pos="0 0 0" axis="0 1 0" range="-3.14 3.14" actuatorfrcrange="-100 100"/>
+              <body name="rfoot" pos="0.031 0 0">
+                <inertial pos="-0.016884 0.000166 -0.054343" quat="-0.00139322 0.658253 -0.0050555 0.752779" mass="1.20445" diaginertia="0.00652476 0.00619614 0.0011981"/>
+                <joint name="rankle2" pos="0 0 0" axis="1 0 0" range="-3.14 3.14" actuatorfrcrange="-100 100"/>
+                <geom size="0.007" pos="-0.1 0.045 -0.078" rgba="0.752941 0.752941 0.752941 1"/>
+                <geom size="0.007" pos="-0.1 -0.045 -0.078" rgba="0.752941 0.752941 0.752941 1"/>
+                <geom size="0.007" pos="0.128 0.045 -0.078" rgba="0.752941 0.752941 0.752941 1"/>
+                <geom size="0.007" pos="0.128 -0.045 -0.078" rgba="0.752941 0.752941 0.752941 1"/>
+              </body>
+            </body>
+          </body>
+        </body>
+      </body>
+    </body>
+    <body name="lhip1" pos="0 0.1 0.02324">
+      <inertial pos="-0.078509 0 -0.118031" quat="0.312936 0.634303 0.633788 0.313119" mass="2.38958" diaginertia="0.011987 0.0111943 0.00318774"/>
+      <joint name="lhipYaw" pos="0 0 0" axis="0 0 1" range="-3.14 3.14" actuatorfrcrange="-100 100"/>
+      <geom size="0.05 0.03" pos="-0.11 0 -0.14" quat="0.707388 0 0.706825 0" type="cylinder" rgba="0.752941 0.752941 0.752941 1"/>
+      <body name="lhip2" pos="-0.054 0 -0.13924">
+        <inertial pos="0.051206 0.002733 -0.00028" quat="0.0501181 0.718914 -0.051553 0.691371" mass="2.50722" diaginertia="0.00404191 0.00361648 0.00344661"/>
+        <joint name="lhipRoll" pos="0 0 0" axis="1 0 0" range="-3.14 3.14" actuatorfrcrange="-100 100"/>
+        <geom size="0.05 0.04" pos="0.05 0 0" quat="0.707388 0.706825 0 0" type="cylinder" rgba="0.752941 0.752941 0.752941 1"/>
+        <body name="lthigh" pos="0.055 0 0">
+          <inertial pos="0.004804 0.002343 -0.169952" quat="0.99957 0.00788906 -0.00488581 -0.0278185" mass="3.09646" diaginertia="0.0430607 0.0408405 0.00572671"/>
+          <joint name="lhipPitch" pos="0 0 0" axis="0 1 0" range="-3.14 3.14" actuatorfrcrange="-100 100"/>
+          <geom size="0.05 0.05 0.16" pos="0 0 -0.23" type="box" rgba="0.752941 0.752941 0.752941 1"/>
+          <body name="lcalf" pos="0 0 -0.375">
+            <inertial pos="0.003757 -0.00029 -0.143175" quat="0.999882 0.000728441 -0.0153344 0.000562778" mass="1.91427" diaginertia="0.0176306 0.017019 0.00210036"/>
+            <joint name="lknee" pos="0 0 0" axis="0 1 0" range="-3.14 3.14" actuatorfrcrange="-100 100"/>
+            <geom size="0.04 0.04 0.1" pos="0 0 -0.18" type="box" rgba="0.752941 0.752941 0.752941 1"/>
+            <body name="lankle" pos="0 0 -0.35">
+              <inertial pos="-0.025377 0.000124 0.003585" quat="0.513827 0.48578 0.48578 0.513827" mass="0.139581" diaginertia="0.000117 0.000111225 3.97754e-05"/>
+              <joint name="lankle1" pos="0 0 0" axis="0 1 0" range="-3.14 3.14" actuatorfrcrange="-100 100"/>
+              <body name="lfoot" pos="0.031 0 0">
+                <inertial pos="-0.016876 -0.000173 -0.054342" quat="0.0024359 0.658246 0.00581857 0.752776" mass="1.20434" diaginertia="0.00652477 0.00619511 0.00119811"/>
+                <joint name="lankle2" pos="0 0 0" axis="1 0 0" range="-3.14 3.14" actuatorfrcrange="-100 100"/>
+                <geom size="0.007" pos="-0.1 0.045 -0.078" rgba="0.752941 0.752941 0.752941 1"/>
+                <geom size="0.007" pos="-0.1 -0.045 -0.078" rgba="0.752941 0.752941 0.752941 1"/>
+                <geom size="0.007" pos="0.128 0.045 -0.078" rgba="0.752941 0.752941 0.752941 1"/>
+                <geom size="0.007" pos="0.128 -0.045 -0.078" rgba="0.752941 0.752941 0.752941 1"/>
+              </body>
+            </body>
+          </body>
+        </body>
+      </body>
+    </body>
+  </body>
+  </worldbody>
+
+  <actuator>
+    <motor name="rhipYaw" joint="rhipYaw"/>
+    <motor name="rhipRoll" joint="rhipRoll"/>
+    <motor name="rhipPitch" joint="rhipPitch"/>
+    <motor name="rknee" joint="rknee"/>
+    <motor name="rankle1" joint="rankle1"/>
+    <motor name="rankle2" joint="rankle2"/>
+    <motor name="lhipYaw" joint="lhipYaw"/>
+    <motor name="lhipRoll" joint="lhipRoll"/>
+    <motor name="lhipPitch" joint="lhipPitch"/>
+    <motor name="lknee" joint="lknee"/>
+    <motor name="lankle1" joint="lankle1"/>
+    <motor name="lankle2" joint="lankle2"/>
+  </actuator>
+
+
+</mujoco>

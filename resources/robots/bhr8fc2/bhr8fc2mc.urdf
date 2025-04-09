@@ -1,0 +1,655 @@
+<robot name="bhr8_fc2">
+  <mujoco>
+    <compiler meshdir="meshes" balanceinertia="true" discardvisual="true" />
+  </mujoco>
+  <link name="torso">
+    <inertial>
+      <origin xyz="-0.012982 0.001904 0.240391" rpy="0 0 0" />
+      <mass value="23.091719" />
+      <inertia ixx="0.717329" ixy="0.001910" ixz="-0.031575" iyy="0.608806" iyz="0.004632" izz="0.242843" />
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="meshes/torso.stl" />
+      </geometry>
+      <material name="">
+        <color rgba="0.752941176470588 0.752941176470588 0.752941176470588 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0.25" rpy="0 0 0" />
+      <geometry>
+          <box size="0.1 0.28 0.56"/>
+      </geometry>
+    </collision>
+  </link>
+  <link name="rhip1">
+    <inertial>
+      <origin xyz="-0.078509 -0.0 -0.118031" rpy="0 0 0" />
+      <mass value="2.389579" />
+      <inertia ixx="0.006148" ixy="0.000001" ixz="0.003865" iyy="0.011987" iyz="0.000000" izz="0.008234" />
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="./meshes/rhip1.stl" />
+      </geometry>
+      <material name="">
+        <color rgba="0.752941176470588 0.752941176470588 0.752941176470588 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin xyz="-0.11 0 -0.14" rpy="0 1.57 0" />
+      <geometry>
+        <cylinder radius="0.05" length="0.06"/>
+      </geometry>
+    </collision>
+  </link>
+  <joint name="rhipYaw" type="revolute">
+    <origin xyz="0 -0.1 0.02324" rpy="0 0 0" />
+    <parent link="torso" />
+    <child link="rhip1" />
+    <axis xyz="0 0 1" />
+    <limit effort="100.0" velocity="100.0" lower="-3.14" upper="3.14"/>
+  </joint>
+  <link name="rhip2">
+    <inertial>
+      <origin xyz="0.051206 -0.002730 -0.000288" rpy="0 0 0" />
+      <mass value="2.507088" />
+      <inertia ixx="0.003451" ixy="-0.000024" ixz="0.000023" iyy="0.003613" iyz="0.000002" izz="0.004041" />
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="./meshes/rhip2.stl" />
+      </geometry>
+      <material name="">
+        <color rgba="0.752941176470588 0.752941176470588 0.752941176470588 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin xyz="0.05 0 0" rpy="1.57 0 0" />
+      <geometry>
+       <cylinder radius="0.05" length="0.08"/>
+      </geometry>
+    </collision>
+  </link>
+  <joint name="rhipRoll" type="revolute">
+    <origin xyz="-0.054 0 -0.13924" rpy="0 0 0" />
+    <parent link="rhip1" />
+    <child link="rhip2" />
+    <axis xyz="1 0 0" />
+    <limit effort="100.0" velocity="100.0" lower="-3.14" upper="3.14"/>
+  </joint>
+  <link name="rthigh">
+    <inertial>
+      <origin xyz="0.005701 -0.002335 -0.170006" rpy="0 0 0" />
+      <mass value="3.096463" />
+      <inertia ixx="0.043059" ixy="0.000136" ixz="0.000276" iyy="0.040946" iyz="-0.000548" izz="0.005837" />
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="./meshes/rthigh.stl" />
+      </geometry>
+      <material name="">
+        <color rgba="0.752941176470588 0.752941176470588 0.752941176470588 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin xyz="0 0 -0.23" rpy="0 0 0" />
+      <geometry>
+        <box size="0.10 0.10 0.32"/>
+      </geometry>
+    </collision>
+  </link>
+  <joint name="rhipPitch" type="revolute">
+    <origin xyz="0.055 -0.0001 0" rpy="0 0 0" />
+    <parent link="rhip2" />
+    <child link="rthigh" />
+    <axis xyz="0 1 0" />
+    <limit effort="100.0" velocity="100.0" lower="-3.14" upper="3.14"/>
+  </joint>
+  <link name="rcalf">
+    <inertial>
+      <origin xyz="0.003761 0.0 -0.143175" rpy="0 0 0" />
+      <mass value="1.914266" />
+      <inertia ixx="0.017616" ixy="0.000003" ixz="0.000476" iyy="0.017018" iyz="-0.000020" izz="0.002115" />
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="./meshes/rcalf.stl" />
+      </geometry>
+      <material name="">
+        <color rgba="0.752941176470588 0.752941176470588 0.752941176470588 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin xyz="0 0 -0.18" rpy="0 0 0" />
+      <geometry>
+        <box size="0.08 0.08 0.20"/>
+      </geometry>
+    </collision>
+  </link>
+  <joint name="rknee" type="revolute">
+    <origin xyz="0 0 -0.375" rpy="0 0 0" />
+    <parent link="rthigh" />
+    <child link="rcalf" />
+    <axis xyz="0 1 0" />
+    <limit effort="100.0" velocity="100.0" lower="-3.14" upper="3.14"/>
+  </joint>
+  <link name="rankle">
+    <inertial>
+      <origin xyz="-0.025377 0.000124 0.003585" rpy="0 0 0" />
+      <mass value="0.139581" />
+      <inertia ixx="0.00040" ixy="0.000000" ixz="-0.000004" iyy="0.00117" iyz="0.000000" izz="0.00111" />
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="./meshes/rankle.stl" />
+      </geometry>
+      <material name="">
+        <color rgba="0.752941176470588 0.752941176470588 0.752941176470588 1" />
+      </material>
+    </visual>
+    <!-- <collision>
+      <origin xyz="-0.019 0 0" rpy="0 1.57 0" />
+      <geometry>
+        <cylinder radius="0.010" length="0.060"/>
+      </geometry>
+    </collision> -->
+  </link>
+  <joint name="rankle1" type="revolute">
+    <origin xyz="0 0 -0.35" rpy="0 0 0" />
+    <parent link="rcalf" />
+    <child link="rankle" />
+    <axis xyz="0 1 0" />
+    <limit effort="100.0" velocity="100.0" lower="-3.14" upper="3.14"/>
+  </joint>
+  <link name="rfoot">
+    <inertial>
+      <origin xyz="-0.016884 0.000166 -0.054343" rpy="0 0 0" />
+      <mass value="1.204448" />
+      <inertia ixx="0.001293" ixy="0.000029" ixz="-0.000704" iyy="0.006196" iyz="0.000001" izz="0.006430" />
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="./meshes/rfoot.stl" />
+      </geometry>
+      <material name="">
+        <color rgba="0.752941176470588 0.752941176470588 0.752941176470588 1" />
+      </material>
+    </visual>
+    <!-- <collision>
+      <origin xyz="-0.10 0.045 -0.078" rpy="0 0 0"/>
+      <geometry>
+        <sphere radius="0.007"/>
+      </geometry>
+    </collision>
+    <collision>
+      <origin xyz="-0.10 -0.045 -0.078" rpy="0 0 0"/>
+      <geometry>
+        <sphere radius="0.007"/>
+      </geometry>
+    </collision>
+    <collision>
+      <origin xyz="0.128 0.045 -0.078" rpy="0 0 0"/>
+      <geometry>
+        <sphere radius="0.007"/>
+      </geometry>
+    </collision>
+    <collision>
+      <origin xyz="0.128 -0.045 -0.078" rpy="0 0 0"/>
+      <geometry>
+        <sphere radius="0.007"/>
+      </geometry>
+    </collision> -->
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="./meshes/rfoot.stl" />
+      </geometry>
+    </collision>
+  </link>
+  <joint name="rankle2" type="revolute">
+    <origin xyz="0.031 0 0" rpy="0 0 0" />
+    <parent link="rankle" />
+    <child link="rfoot" />
+    <axis xyz="1 0 0" />
+    <limit effort="100.0" velocity="100.0" lower="-3.14" upper="3.14"/>
+  </joint>
+  <link name="lhip1">
+    <inertial>
+      <origin xyz="-0.078509 -0.0 -0.118031" rpy="0 0 0" />
+      <mass value="2.389579" />
+      <inertia ixx="0.006148" ixy="0.000001" ixz="0.003865" iyy="0.011987" iyz="0.000000" izz="0.008234" />
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="./meshes/lhip1.stl" />
+      </geometry>
+      <material name="">
+        <color rgba="0.752941176470588 0.752941176470588 0.752941176470588 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin xyz="-0.11 0 -0.14" rpy="0 1.57 0" />
+      <geometry>
+        <cylinder radius="0.05" length="0.06"/>
+      </geometry>
+    </collision>
+  </link>
+  <joint name="lhipYaw" type="revolute">
+    <origin xyz="0 0.1 0.02324" rpy="0 0 0" />
+    <parent link="torso" />
+    <child link="lhip1" />
+    <axis xyz="0 0 1" />
+    <limit effort="100.0" velocity="100.0" lower="-3.14" upper="3.14"/>
+  </joint>
+  <link name="lhip2">
+    <inertial>
+      <origin xyz="0.051206 0.002733 -0.000280" rpy="0 0 0" />
+      <mass value="2.507222" />
+      <inertia ixx="0.003451" ixy="0.000024" ixz="0.000023" iyy="0.003613" iyz="-0.000003" izz="0.004041" />
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="./meshes/lhip2.stl" />
+      </geometry>
+      <material name="">
+        <color rgba="0.752941176470588 0.752941176470588 0.752941176470588 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin xyz="0.05 0 0" rpy="1.57 0 0" />
+      <geometry>
+       <cylinder radius="0.05" length="0.08"/>
+      </geometry>
+    </collision>
+  </link>
+  <joint name="lhipRoll" type="revolute">
+    <origin xyz="-0.054 0 -0.13924" rpy="0 0 0" />
+    <parent link="lhip1" />
+    <child link="lhip2" />
+    <axis xyz="1 0 0" />
+    <limit effort="100.0" velocity="100.0" lower="-3.14" upper="3.14"/>
+  </joint>
+  <link name="lthigh">
+    <inertial>
+      <origin xyz="0.004804 0.002343 -0.169952" rpy="0 0 0" />
+      <mass value="3.096463" />
+      <inertia ixx="0.043050" ixy="-0.000129" ixz="0.000379" iyy="0.040839" iyz="0.000543" izz="0.005739" />
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="./meshes/lthigh.stl" />
+      </geometry>
+      <material name="">
+        <color rgba="0.752941176470588 0.752941176470588 0.752941176470588 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin xyz="0 0 -0.23" rpy="0 0 0" />
+      <geometry>
+        <box size="0.10 0.10 0.32"/>
+      </geometry>
+    </collision>
+  </link>
+  <joint name="lhipPitch" type="revolute">
+    <origin xyz="0.055 0.0 0" rpy="0 0 0" />
+    <parent link="lhip2" />
+    <child link="lthigh" />
+    <axis xyz="0 1 0" />
+    <limit effort="100.0" velocity="100.0" lower="-3.14" upper="3.14"/>
+  </joint>
+  <link name="lcalf">
+    <inertial>
+      <origin xyz="0.003757 -0.000290 -0.143175" rpy="0 0 0" />
+      <mass value="1.914266" />
+      <inertia ixx="0.017616" ixy="0.000000" ixz="0.000476" iyy="0.017019" iyz="0.000022" izz="0.002115" />
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="./meshes/lcalf.stl" />
+      </geometry>
+      <material name="">
+        <color rgba="0.752941176470588 0.752941176470588 0.752941176470588 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin xyz="0 0 -0.18" rpy="0 0 0" />
+      <geometry>
+        <box size="0.08 0.08 0.20"/>
+      </geometry>
+    </collision>
+  </link>
+  <joint name="lknee" type="revolute">
+    <origin xyz="0 0 -0.375" rpy="0 0 0" />
+    <parent link="lthigh" />
+    <child link="lcalf" />
+    <axis xyz="0 1 0" />
+    <limit effort="100.0" velocity="100.0" lower="-3.14" upper="3.14"/>
+  </joint>
+  <link name="lankle">
+    <inertial>
+      <origin xyz="-0.025377 0.000124 0.003585" rpy="0 0 0" />
+      <mass value="0.139581" />
+      <inertia ixx="0.000040" ixy="0.000000" ixz="-0.000004" iyy="0.000117" iyz="0.000000" izz="0.000111" />
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="./meshes/lankle.stl" />
+      </geometry>
+      <material name="">
+        <color rgba="0.752941176470588 0.752941176470588 0.752941176470588 1" />
+      </material>
+    </visual>
+    <!-- <collision>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="./meshes/lankle.stl" />
+      </geometry>
+    </collision> -->
+  </link>
+  <joint name="lankle1" type="revolute">
+    <origin xyz="0 0 -0.35" rpy="0 0 0" />
+    <parent link="lcalf" />
+    <child link="lankle" />
+    <axis xyz="0 1 0" />
+    <limit effort="100.0" velocity="100.0" lower="-3.14" upper="3.14"/>
+  </joint>
+  <link name="lfoot">
+    <inertial>
+      <origin xyz="-0.016876 -0.000173 -0.054342" rpy="0 0 0" />
+      <mass value="1.204345" />
+      <inertia ixx="0.001293" ixy="-0.000028" ixz="-0.000704" iyy="0.006195" iyz="0.000000" izz="0.006430" />
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="./meshes/lfoot.stl" />
+      </geometry>
+      <material name="">
+        <color rgba="0.752941176470588 0.752941176470588 0.752941176470588 1" />
+      </material>
+    </visual>
+    <!-- <collision>
+      <origin xyz="-0.10 0.045 -0.078" rpy="0 0 0"/>
+      <geometry>
+        <sphere radius="0.007"/>
+      </geometry>
+    </collision>
+    <collision>
+      <origin xyz="-0.10 -0.045 -0.078" rpy="0 0 0"/>
+      <geometry>
+        <sphere radius="0.007"/>
+      </geometry>
+    </collision>
+    <collision>
+      <origin xyz="0.128 0.045 -0.078" rpy="0 0 0"/>
+      <geometry>
+        <sphere radius="0.007"/>
+      </geometry>
+    </collision>
+    <collision>
+      <origin xyz="0.128 -0.045 -0.078" rpy="0 0 0"/>
+      <geometry>
+        <sphere radius="0.007"/>
+      </geometry>
+    </collision> -->
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="./meshes/lfoot.stl" />
+      </geometry>
+    </collision>
+  </link>
+  <joint name="lankle2" type="revolute">
+    <origin xyz="0.031 0 0" rpy="0 0 0" />
+    <parent link="lankle" />
+    <child link="lfoot" />
+    <axis xyz="1 0 0" />
+    <limit effort="100.0" velocity="100.0" lower="-3.14" upper="3.14"/>
+  </joint>
+  <link name="rshoulder1">
+    <inertial>
+      <origin xyz="-0.072957 -0.077869 0.0" rpy="0 0 0" />
+      <mass value="1.938195" />
+      <inertia ixx="0.002538" ixy="0.000898" ixz="-0.000001" iyy="0.006956" iyz="0.000000" izz="0.007542" />
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="./meshes/rshoulder1.stl" />
+      </geometry>
+      <material name="">
+        <color rgba="0.752941176470588 0.752941176470588 0.752941176470588 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin xyz="-0.11 -0.08 0" rpy="0 1.57 0" />
+      <geometry>
+        <cylinder radius="0.047" length="0.07"/>
+      </geometry>
+    </collision>
+  </link>
+  <joint name="rshoulderPitch" type="fixed">
+    <origin xyz="-0.02625 -0.13476 0.389" rpy="0 0 0" />
+    <parent link="torso" />
+    <child link="rshoulder1" />
+    <axis xyz="0 -1 0" />
+    <limit effort="100.0" velocity="100.0" lower="-3.14" upper="3.14"/>
+  </joint>
+  <link name="rshoulder2">
+    <inertial>
+      <origin xyz="0.051 0.0 -0.017501" rpy="0 0 0" />
+      <mass value="2.116461" />
+      <inertia ixx="0.002659" ixy="0.000000" ixz="0.000079" iyy="0.003457" iyz="0.000000" izz="0.003122" />
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="./meshes/rshoulder2.stl" />
+      </geometry>
+      <material name="">
+        <color rgba="0.752941176470588 0.752941176470588 0.752941176470588 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin xyz="0.05 0 0" rpy="0 0 0" />
+      <geometry>
+        <cylinder radius="0.047" length="0.07"/>
+      </geometry>
+    </collision>
+  </link>
+  <joint name="rshoulderRoll" type="fixed">
+    <origin xyz="-0.049 -0.08424 0" rpy="0 0 0" />
+    <parent link="rshoulder1" />
+    <child link="rshoulder2" />
+    <axis xyz="1 0 0" />
+    <limit effort="100.0" velocity="100.0" lower="-3.14" upper="3.14"/>
+  </joint>
+  <link name="rbigarm">
+    <inertial>
+      <origin xyz="0.002752 0.00 -0.123717" rpy="0 0 0" />
+      <mass value="1.703058" />
+      <inertia ixx="0.012105" ixy="0.000000" ixz="-0.000652" iyy="0.011971" iyz="0.000000" izz="0.001265" />
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="./meshes/rbigarm.stl" />
+      </geometry>
+      <material name="">
+        <color rgba="0.752941176470588 0.752941176470588 0.752941176470588 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin xyz="0 0 -0.15" rpy="0 0 0" />
+      <geometry>
+        <cylinder radius="0.042" length="0.2"/>
+      </geometry>
+    </collision>
+  </link>
+  <joint name="rshoulderYaw" type="fixed">
+    <origin xyz="0.049 0 -0.05" rpy="0 0 0" />
+    <parent link="rshoulder2" />
+    <child link="rbigarm" />
+    <axis xyz="0 0 1" />
+    <limit effort="100.0" velocity="100.0" lower="-3.14" upper="3.14"/>
+  </joint>
+  <link name="rforearm">
+    <inertial>
+      <origin xyz="0.002409 0.01 -0.09" rpy="0 0 0" />
+      <mass value="0.181283" />
+      <inertia ixx="0.001368" ixy="0.000000" ixz="0.000029" iyy="0.001374" iyz="0.000000" izz="0.000040" />
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="./meshes/rforearm.stl" />
+      </geometry>
+      <material name="">
+        <color rgba="0.752941176470588 0.752941176470588 0.752941176470588 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin xyz="0 0 -0.15" rpy="0 0 0" />
+      <geometry>
+        <cylinder radius="0.018" length="0.25"/>
+      </geometry>
+    </collision>
+  </link>
+  <joint name="relbow" type="fixed">
+    <origin xyz="0 -0.01 -0.30324" rpy="0 -1.6 0" />
+    <parent link="rbigarm" />
+    <child link="rforearm" />
+    <axis xyz="0 -1 0" />
+    <limit effort="100.0" velocity="100.0" lower="-3.14" upper="3.14"/>
+  </joint>
+  <link name="lshoulder1">
+    <inertial>
+      <origin xyz="-0.072957 0.077869 -0.0000" rpy="0 0 0" />
+      <mass value="1.938195" />
+      <inertia ixx="0.002538" ixy="-0.000898" ixz="0.000001" iyy="0.006956" iyz="0.000000" izz="0.007542" />
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="./meshes/lshoulder1.stl" />
+      </geometry>
+      <material name="">
+        <color rgba="0.752941176470588 0.752941176470588 0.752941176470588 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin xyz="-0.11 -0.08 0" rpy="0 1.57 0" />
+      <geometry>
+        <cylinder radius="0.047" length="0.07"/>
+      </geometry>
+    </collision>
+  </link>
+  <joint name="lshoulderPitch" type="fixed">
+    <origin xyz="-0.02625 0.13476 0.389" rpy="0 0 0" />
+    <parent link="torso" />
+    <child link="lshoulder1" />
+    <axis xyz="0 1 0" />
+    <limit effort="100.0" velocity="100.0" lower="-3.14" upper="3.14"/>
+  </joint>
+  <link name="lshoulder2">
+    <inertial>
+      <origin xyz="0.051 0.00 -0.017501" rpy="0 0 0" />
+      <mass value="2.116461" />
+      <inertia ixx="0.002659" ixy="0.000000" ixz="0.000079" iyy="0.003457" iyz="0.000000" izz="0.003122" />
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="./meshes/lshoulder2.stl" />
+      </geometry>
+      <material name="">
+        <color rgba="0.752941176470588 0.752941176470588 0.752941176470588 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin xyz="0.05 0 0" rpy="0 0 0" />
+      <geometry>
+        <cylinder radius="0.047" length="0.07"/>
+      </geometry>
+    </collision>
+  </link>
+  <joint name="lshoulderRoll" type="fixed">
+    <origin xyz="-0.049 0.08424 0" rpy="0 0 0" />
+    <parent link="lshoulder1" />
+    <child link="lshoulder2" />
+    <axis xyz="1 0 0" />
+    <limit effort="100.0" velocity="100.0" lower="-3.14" upper="3.14"/>
+  </joint>
+  <link name="lbigarm">
+    <inertial>
+      <origin xyz="0.002752 0. -0.123717" rpy="0 0 0" />
+      <mass value="1.703058" />
+      <inertia ixx="0.012105" ixy="0.000000" ixz="-0.000652" iyy="0.011971" iyz="0.000000" izz="0.001265" />
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="./meshes/lbigarm.stl" />
+      </geometry>
+      <material name="">
+        <color rgba="0.752941176470588 0.752941176470588 0.752941176470588 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin xyz="0 0 -0.15" rpy="0 0 0" />
+      <geometry>
+        <cylinder radius="0.042" length="0.2"/>
+      </geometry>
+    </collision>
+  </link>
+  <joint name="lshoulderYaw" type="fixed">
+    <origin xyz="0.049 0 -0.05" rpy="0 0 0" />
+    <parent link="lshoulder2" />
+    <child link="lbigarm" />
+    <axis xyz="0 0 1" />
+    <limit effort="100.0" velocity="100.0" lower="-3.14" upper="3.14"/>
+  </joint>
+  <link name="lforearm">
+    <inertial>
+      <origin xyz="0.0024 -0.01 -0.09" rpy="0 0 0" />
+      <mass value="0.181283" />
+      <inertia ixx="0.001368" ixy="0.000000" ixz="0.000029" iyy="0.001374" iyz="0.000000" izz="0.000040" />
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="./meshes/lforearm.stl" />
+      </geometry>
+      <material name="">
+        <color rgba="0.752941176470588 0.752941176470588 0.752941176470588 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin xyz="0 0 -0.15" rpy="0 0 0" />
+      <geometry>
+        <cylinder radius="0.018" length="0.25"/>
+      </geometry>
+    </collision>
+  </link>
+  <joint name="lelbow" type="fixed">
+    <origin xyz="0 0.01 -0.30324" rpy="0 -1.6 0" />
+    <parent link="lbigarm" />
+    <child link="lforearm" />
+    <axis xyz="0 1 0" />
+    <limit effort="100.0" velocity="100.0" lower="-3.14" upper="3.14"/>
+  </joint>
+</robot>
