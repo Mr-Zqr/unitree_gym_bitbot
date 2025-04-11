@@ -154,7 +154,7 @@ class BHR8Robot(LeggedRobot):
     
     def _reward_feet_swing_height(self):
         contact = torch.norm(self.contact_forces[:, self.feet_indices, :3], dim=2) > 1.
-        pos_error = torch.square(self.feet_pos[:, :, 2] - 0.1) * ~contact
+        pos_error = torch.square(self.feet_pos[:, :, 2] - 0.08) * ~contact
         res = torch.sum(pos_error, dim=(1))
         res[self._in_place_flag] = 0
         return res

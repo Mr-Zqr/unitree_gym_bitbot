@@ -95,7 +95,7 @@ class BHR8RoughCfg( LeggedRobotCfg ):
             dof_vel = -0.0001
             feet_air_time = 1.0
             collision = -1.0
-            action_rate = -0.05
+            action_rate = -0.08
             dof_pos_limits = -5.0
             alive = 0.16
             hip_pos = -1.0
@@ -103,11 +103,11 @@ class BHR8RoughCfg( LeggedRobotCfg ):
             feet_swing_height = -30.0
             contact = 0.38
             no_fly = 2
-            stand_still = 3
+            stand_still = 100
             # dof_error = 0.2
             # joint_pos = 3.0
             feet_distance = 0.0
-            feet_contact_forces = -0.005
+            feet_contact_forces = -0.01
 
 class BHR8RoughCfgPPO( LeggedRobotCfgPPO ):
     class policy:
