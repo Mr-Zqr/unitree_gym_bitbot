@@ -16,7 +16,7 @@ class LeggedRobotCfg(BaseConfig):
         horizontal_scale = 0.1 # [m]
         vertical_scale = 0.005 # [m]
         border_size = 25 # [m]
-        curriculum = True
+        curriculum = False
         static_friction = 1.0
         dynamic_friction = 1.0
         restitution = 0.
@@ -50,11 +50,11 @@ class LeggedRobotCfg(BaseConfig):
         heading_command = True # if true: compute ang vel command from heading error
         class ranges:
             lin_vel_x = [-1.0, 1.0] # min max [m/s]
-            # lin_vel_y = [-1.0, 1.0]   # min max [m/s]
-            # ang_vel_yaw = [-1.0, 1.0]    # min max [rad/s]
+            lin_vel_y = [-1.0, 1.0]   # min max [m/s]
+            ang_vel_yaw = [-1.0, 1.0]    # min max [rad/s]
             # lin_vel_x = [0, 0] # min max [m/s]
-            lin_vel_y = [0, 0]   # min max [m/s]
-            ang_vel_yaw = [0, 0]    # min max [rad/s]
+            # lin_vel_y = [0, 0]   # min max [m/s]
+            # ang_vel_yaw = [0, 0]    # min max [rad/s]
             heading = [-3.14, 3.14]
 
     class init_state:
@@ -131,7 +131,7 @@ class LeggedRobotCfg(BaseConfig):
         soft_dof_vel_limit = 1.
         soft_torque_limit = 1.
         base_height_target = 1.
-        max_contact_force = 100. # forces above this value are penalized
+        max_contact_force = 700. # forces above this value are penalized
 
     class normalization:
         class obs_scales:
@@ -197,10 +197,10 @@ class LeggedRobotCfgPPO(BaseConfig):
         value_loss_coef = 1.0
         use_clipped_value_loss = True
         clip_param = 0.2
-        entropy_coef = 0.01
+        entropy_coef = 0.005
         num_learning_epochs = 5
         num_mini_batches = 4 # mini batch size = num_envs*nsteps / nminibatches
-        learning_rate = 1.e-3 #5.e-4
+        learning_rate = 1.e-4 #5.e-4
         schedule = 'adaptive' # could be adaptive, fixed
         gamma = 0.99
         lam = 0.95

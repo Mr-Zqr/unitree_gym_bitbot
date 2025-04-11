@@ -32,7 +32,7 @@ class BHR8RoughCfg( LeggedRobotCfg ):
         added_mass_range = [-1., 3.]
         push_robots = True
         push_interval_s = 5
-        max_push_vel_xy = 1.5
+        max_push_vel_xy = 0.6
       
 
     class control( LeggedRobotCfg.control ):
@@ -73,7 +73,7 @@ class BHR8RoughCfg( LeggedRobotCfg ):
         file = '{LEGGED_GYM_ROOT_DIR}/resources/robots/bhr8fc2/bhr8fc2mc.urdf'
         name = "bhr8"
         foot_name = "foot"
-        penalize_contacts_on = ["hip", "calf", "foot"]
+        penalize_contacts_on = ["hip", "calf"]
         terminate_after_contacts_on = ["torso"]
         self_collisions = 0 # 1 to disable, 0 to enable...bitwise filter
         flip_visual_attachments = False
@@ -91,22 +91,23 @@ class BHR8RoughCfg( LeggedRobotCfg ):
             ang_vel_xy = -0.05
             orientation = -1.0
             base_height = -4.0
-            dof_acc = -1e-7
-            dof_vel = -1e-3
+            dof_acc = -5e-7
+            dof_vel = -0.0001
             feet_air_time = 1.0
             collision = -1.0
-            action_rate = -0.1
+            action_rate = -0.05
             dof_pos_limits = -5.0
             alive = 0.16
             hip_pos = -1.0
             contact_no_vel = -0.2
-            feet_swing_height = -20.0
+            feet_swing_height = -30.0
             contact = 0.38
-            # no_fly = 2
-            dof_error = -0.3
+            no_fly = 2
+            stand_still = 3
+            # dof_error = 0.2
             # joint_pos = 3.0
             feet_distance = 0.0
-            # feet_contact_force = 
+            feet_contact_forces = -0.005
 
 class BHR8RoughCfgPPO( LeggedRobotCfgPPO ):
     class policy:
@@ -123,7 +124,7 @@ class BHR8RoughCfgPPO( LeggedRobotCfgPPO ):
         entropy_coef = 0.001
     class runner( LeggedRobotCfgPPO.runner ):
         policy_class_name = "ActorCriticRecurrent"
-        max_iterations = 10000
+        max_iterations = 20000
         run_name = ''
         experiment_name = 'bhr8'
 

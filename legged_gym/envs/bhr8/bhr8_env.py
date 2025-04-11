@@ -14,6 +14,7 @@ class BHR8Robot(LeggedRobot):
         self.cfg.env.velocity_debug = False
         period = 0.5
         offset = 0.5
+        self.phase_offset = torch.rand((self.num_envs,), device=self.device)
         self.phase = (self.episode_length_buf * self.dt) % period / period
         self.compute_observations()
     
@@ -68,10 +69,12 @@ class BHR8Robot(LeggedRobot):
         period = 0.8
         # period = 0.5
         offset = 0.5
-        self.phase = (self.episode_length_buf * self.dt) % period / period
+        self.phase = (self.episode_length_buf * self.dt) % period / period + self.phase_offset
         self.phase_left = self.phase
         self.phase_right = (self.phase + offset) % 1
         self.leg_phase = torch.cat([self.phase_left.unsqueeze(1), self.phase_right.unsqueeze(1)], dim=-1)
+
+        self._in_place_flag = torch.norm(self.commands[:, :2], dim=-1) < 0.1
         
         super()._post_physics_step_callback()
 
@@ -112,7 +115,7 @@ class BHR8Robot(LeggedRobot):
     def compute_observations(self):
         """ Computes observations
         """
-        self.compute_ref_state()
+        # self.compute_ref_state()
         sin_phase = torch.sin(2 * np.pi * self.phase ).unsqueeze(1)
         cos_phase = torch.cos(2 * np.pi * self.phase ).unsqueeze(1)
         self.obs_buf = torch.cat((  
@@ -146,12 +149,15 @@ class BHR8Robot(LeggedRobot):
             is_stance = self.leg_phase[:, i] < 0.55
             contact = self.contact_forces[:, self.feet_indices[i], 2] > 1
             res += ~(contact ^ is_stance)
+        res[self._in_place_flag] = 0
         return res
     
     def _reward_feet_swing_height(self):
         contact = torch.norm(self.contact_forces[:, self.feet_indices, :3], dim=2) > 1.
         pos_error = torch.square(self.feet_pos[:, :, 2] - 0.1) * ~contact
-        return torch.sum(pos_error, dim=(1))
+        res = torch.sum(pos_error, dim=(1))
+        res[self._in_place_flag] = 0
+        return res
     
     def _reward_alive(self):
         # Reward for staying alive
@@ -167,7 +173,9 @@ class BHR8Robot(LeggedRobot):
     def _reward_no_fly(self):
         contacts = self.contact_forces[:, self.feet_indices, 2] > 0.1
         single_contact = torch.sum(1.*contacts, dim=1)==1
-        return 1.*single_contact 
+        res = 1.*single_contact
+        res[self._in_place_flag] = 0
+        return res
 
     def _reward_hip_pos(self):
         return torch.sum(torch.square(self.dof_pos[:,[0,1,5,6]]), dim=1)
@@ -196,6 +204,19 @@ class BHR8Robot(LeggedRobot):
         d_max = torch.clamp(foot_dist - max_df, 0, 0.5)
         return (torch.exp(-torch.abs(d_min) * 100) + torch.exp(-torch.abs(d_max) * 100)) / 2
 
+    def _reward_feet_contact_forces(self):
+        """
+        Calculates the reward for keeping contact forces within a specified range. Penalizes
+        high contact forces on the feet.
+        """
+        return torch.sum((torch.norm(self.contact_forces[:, self.feet_indices, :], dim=-1) - self.cfg.rewards.max_contact_force).clip(0, 400), dim=1)
+    
+    def _reward_stand_still(self):
+        dof_pos_error = torch.norm((self.dof_pos - self.default_dof_pos)[:, :11], dim=1)
+        dof_vel_error = torch.norm(self.dof_vel[:, :11], dim=1)
+        rew = torch.exp(- 0.1*dof_vel_error) * torch.exp(- dof_pos_error) 
+        rew[~self._in_place_flag] = 0
+        return rew
 ############# utils #############
 
     def draw_velocity_actual(self):
