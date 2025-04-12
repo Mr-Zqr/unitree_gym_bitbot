@@ -32,7 +32,7 @@ class BHR8RoughCfg( LeggedRobotCfg ):
         added_mass_range = [-1., 3.]
         push_robots = True
         push_interval_s = 5
-        max_push_vel_xy = 0.6
+        max_push_vel_xy = 1.0
       
 
     class control( LeggedRobotCfg.control ):
@@ -60,7 +60,7 @@ class BHR8RoughCfg( LeggedRobotCfg ):
         damping = {  'hipYaw': 2.5,
                      'hipRoll': 2.5,
                      'hipPitch': 2.5,
-                     'knee': 4,
+                     'knee': 2,
                      'ankle': 2,
                      }  # [N*m/rad]  # [N*m*s/rad]
 
@@ -85,29 +85,30 @@ class BHR8RoughCfg( LeggedRobotCfg ):
         max_dist = 0.7
         
         class scales( LeggedRobotCfg.rewards.scales ):
-            tracking_lin_vel = 1.5
+            tracking_lin_vel = 1.0
             tracking_ang_vel = 0.5
             lin_vel_z = -2.0
             ang_vel_xy = -0.05
             orientation = -1.0
             base_height = -4.0
-            dof_acc = -5e-7
+            dof_acc = -2.5e-7
             dof_vel = -0.0001
             feet_air_time = 1.0
             collision = -1.0
-            action_rate = -0.08
+            action_rate = -0.05
             dof_pos_limits = -5.0
-            alive = 0.16
+            alive = 0.56
             hip_pos = -1.0
             contact_no_vel = -0.2
-            feet_swing_height = -30.0
+            feet_swing_height = -20.0
             contact = 0.38
             no_fly = 2
-            stand_still = 100
-            # dof_error = 0.2
+            stand_still_exbody = 5
+            dof_error = 0.0
             # joint_pos = 3.0
             feet_distance = 0.0
-            feet_contact_forces = -0.01
+            # feet_contact_forces = -0.01
+            feet_force = -3e-3
 
 class BHR8RoughCfgPPO( LeggedRobotCfgPPO ):
     class policy:
@@ -121,10 +122,11 @@ class BHR8RoughCfgPPO( LeggedRobotCfgPPO ):
         rnn_num_layers = 1
         
     class algorithm( LeggedRobotCfgPPO.algorithm ):
-        entropy_coef = 0.001
+        entropy_coef = 0.01
+        learning_rate = 1.e-3 #5.e-4
     class runner( LeggedRobotCfgPPO.runner ):
         policy_class_name = "ActorCriticRecurrent"
-        max_iterations = 20000
+        max_iterations = 50000
         run_name = ''
         experiment_name = 'bhr8'
 

@@ -69,12 +69,13 @@ class BHR8Robot(LeggedRobot):
         period = 0.8
         # period = 0.5
         offset = 0.5
-        self.phase = (self.episode_length_buf * self.dt) % period / period + self.phase_offset
+        self.phase = (self.episode_length_buf * self.dt) % period / period # + self.phase_offset
         self.phase_left = self.phase
         self.phase_right = (self.phase + offset) % 1
         self.leg_phase = torch.cat([self.phase_left.unsqueeze(1), self.phase_right.unsqueeze(1)], dim=-1)
 
-        self._in_place_flag = torch.norm(self.commands[:, :2], dim=-1) < 0.1
+        self._in_place_flag = 0*(torch.norm(self.commands[:, :2], dim=-1) < 0.15)
+        # print(self._in_place_flag)
         
         super()._post_physics_step_callback()
 
@@ -154,7 +155,7 @@ class BHR8Robot(LeggedRobot):
     
     def _reward_feet_swing_height(self):
         contact = torch.norm(self.contact_forces[:, self.feet_indices, :3], dim=2) > 1.
-        pos_error = torch.square(self.feet_pos[:, :, 2] - 0.08) * ~contact
+        pos_error = torch.square(self.feet_pos[:, :, 2] - 0.1) * ~contact
         res = torch.sum(pos_error, dim=(1))
         res[self._in_place_flag] = 0
         return res
@@ -211,12 +212,22 @@ class BHR8Robot(LeggedRobot):
         """
         return torch.sum((torch.norm(self.contact_forces[:, self.feet_indices, :], dim=-1) - self.cfg.rewards.max_contact_force).clip(0, 400), dim=1)
     
-    def _reward_stand_still(self):
-        dof_pos_error = torch.norm((self.dof_pos - self.default_dof_pos)[:, :11], dim=1)
-        dof_vel_error = torch.norm(self.dof_vel[:, :11], dim=1)
-        rew = torch.exp(- 0.1*dof_vel_error) * torch.exp(- dof_pos_error) 
-        rew[~self._in_place_flag] = 0
+    def _reward_feet_force(self):
+        rew = torch.norm(self.contact_forces[:, self.feet_indices, 2], dim=-1)
+        rew[rew < 500] = 0
+        rew[rew > 500] -= 500
+        rew[self._in_place_flag] = 0
+        # print(rew[self.lookat_id])
+        # print(self.dof_names)
         return rew
+
+    def _reward_stand_still_exbody(self):
+        dof_pos_error = torch.norm((self.dof_pos - self.default_dof_pos)[:, :], dim=1)
+        dof_vel_error = torch.norm(self.dof_vel[:, :], dim=1)
+        rew = torch.exp(- 0.1*dof_vel_error) * torch.exp(- dof_pos_error) 
+        # rew[~self._in_place_flag] = 0
+        return rew
+
 ############# utils #############
 
     def draw_velocity_actual(self):
