@@ -1,5 +1,6 @@
 from .base_config import BaseConfig
 
+# used for training
 class LeggedRobotCfg(BaseConfig):
     class env:
         num_envs = 4096

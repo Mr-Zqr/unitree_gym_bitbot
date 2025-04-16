@@ -1,5 +1,6 @@
 from legged_gym.envs.base.legged_robot_config import LeggedRobotCfg, LeggedRobotCfgPPO
 
+# used for training
 class BHR8RoughCfg( LeggedRobotCfg ):
     class init_state( LeggedRobotCfg.init_state ):
         pos = [0.0, 0.0, 1.0] # x,y,z [m]
@@ -109,7 +110,7 @@ class BHR8RoughCfg( LeggedRobotCfg ):
             # joint_pos = 3.0
             feet_distance = 0.0
             # feet_contact_forces = -0.005
-            feet_force = -3e-3
+            # feet_force = -3e-4
 
         only_positive_rewards = False
 
