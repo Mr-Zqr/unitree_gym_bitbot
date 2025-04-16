@@ -5,6 +5,7 @@ import numpy as np
 import random
 from isaacgym import gymapi
 from isaacgym import gymutil
+import inspect
 
 import argparse
 from legged_gym import LEGGED_GYM_ROOT_DIR, LEGGED_GYM_ENVS_DIR
@@ -34,6 +35,18 @@ def update_class_from_dict(obj, dict):
         else:
             setattr(obj, key, val)
     return
+
+def cp_env(env, logdir):
+    file_path = inspect.getfile(env.__class__)
+    directory = os.path.dirname(file_path)
+    print("copying env from ", directory, " to ", logdir)
+    os.system(f"cp -r {directory} {logdir}")
+    # 将directory最后一个//之间换成base
+    os.system(f"cp -r {directory}/../base/ {logdir}")
+    print("copying env from ", directory, " to ", logdir)
+    # dir last name
+    dir_name = os.path.basename(os.path.normpath(directory))
+    os.system(f"rm -r {logdir}/{dir_name}/__pycache__")
 
 def set_seed(seed):
     if seed == -1:
@@ -138,6 +151,12 @@ def get_args():
         {"name": "--device", "type": str, "default": "cuda:0", "help": 'Device for sim, rl, and graphics'},
         {"name": "--show_log", "action": "store_true", "default": False, "help": "record log"},
         {"name": "--vel_debug", "action": "store_true", "default": False, "help": "show velocity in visualization"},
+        {
+            "name": "--backup_env",
+            "action": "store_true",
+            "default": True,
+            "help": "Backup env and config files in the log directory",
+        },
     ]
     # parse arguments
     args = parse_arguments(

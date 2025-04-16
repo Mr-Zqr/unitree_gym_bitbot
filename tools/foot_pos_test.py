@@ -78,16 +78,15 @@ print(f"机器人有 {num_dofs} 个自由度和 {num_bodies} 个刚体")
 # 打印所有刚体名称
 body_names = []
 foot_indices = []
-for i in range(num_bodies):
-    name = gym.get_asset_rigid_body_name(robot_asset, i)
-    body_names.append(name)
-    # 自动检测足部链接 (假设足部链接名称包含"foot"或"feet")
-    if "foot" in name.lower() or "feet" in name.lower():
-        foot_indices.append(i)
-    print(f"刚体 {i}: {name}")
+# for i in range(num_bodies):
+#     name = gym.get_asset_rigid_body_name(robot_asset, i)
+#     body_names.append(name)
+#     # 自动检测足部链接 (假设足部链接名称包含"foot"或"feet")
+#     if "foot" in name.lower() or "feet" in name.lower():
+#         foot_indices.append(i)
+#     print(f"刚体 {i}: {name}")
 
-print(f"检测到的足部链接索引: {foot_indices}")
-
+# print(f"检测到的足部链接索引: {foot_indices}")
 # 创建环境
 for i in range(num_envs):
     env = gym.create_env(sim, lower, upper, 1)
@@ -125,18 +124,21 @@ while not gym.query_viewer_has_closed(viewer):
     gym.step_graphics(sim)
     gym.draw_viewer(viewer, sim, True)
     
-    # 获取足部位置
-    for i in range(num_envs):
-        actor_handle = gym.get_actor_handle(envs[i], 0)
+    root_state = gym.acquire_actor_root_state_tensor(sim)
+    root_states = gymtorch.wrap_tensor(root_state)
+    print("根状态:", root_states[:,2])
+    # # 获取足部位置
+    # for i in range(num_envs):
+    #     actor_handle = gym.get_actor_handle(envs[i], 0)
         
-        # 输出足部位置
-        print("足部位置:")
-        for foot_idx in foot_indices:
-            rigid_body_state = gym.acquire_rigid_body_state_tensor(sim)
-            rigid_body_states = gymtorch.wrap_tensor(rigid_body_state)
-            foot_state = rigid_body_states[foot_idx]
-            foot_name = body_names[foot_idx]
-            print(f"  {foot_name}: {foot_state}")
+    #     # 输出足部位置
+    #     print("足部位置:")
+    #     for foot_idx in foot_indices:
+    #         rigid_body_state = gym.acquire_rigid_body_state_tensor(sim)
+    #         rigid_body_states = gymtorch.wrap_tensor(rigid_body_state)
+    #         foot_state = rigid_body_states[foot_idx]
+    #         foot_name = body_names[foot_idx]
+    #         print(f"  {foot_name}: {foot_state}")
     
     # 等待一点时间
     gym.sync_frame_time(sim)

@@ -12,10 +12,11 @@ class BHR8Robot(LeggedRobot):
         self.debug_viz = False
         super().__init__(cfg, sim_params, physics_engine, sim_device, headless)
         self.cfg.env.velocity_debug = False
-        period = 0.5
+        period = 0.9
         offset = 0.5
-        self.phase_offset = torch.rand((self.num_envs,), device=self.device)
-        self.phase = (self.episode_length_buf * self.dt) % period / period
+        # self.phase_offset = torch.rand((self.num_envs,), device=self.device)
+        # self.phase = ((self.episode_length_buf * self.dt) % period / period + self.phase_offset) % 1
+        self.phase = ((self.episode_length_buf * self.dt) % period / period) % 1
         self.compute_observations()
     
     def _get_noise_scale_vec(self, cfg):
@@ -66,15 +67,15 @@ class BHR8Robot(LeggedRobot):
     def _post_physics_step_callback(self):
         self.update_feet_state()
 
-        period = 0.8
+        period = 0.9
         # period = 0.5
         offset = 0.5
-        self.phase = (self.episode_length_buf * self.dt) % period / period # + self.phase_offset
+        self.phase = ((self.episode_length_buf * self.dt) % period / period ) % 1
         self.phase_left = self.phase
         self.phase_right = (self.phase + offset) % 1
         self.leg_phase = torch.cat([self.phase_left.unsqueeze(1), self.phase_right.unsqueeze(1)], dim=-1)
 
-        self._in_place_flag = 0*(torch.norm(self.commands[:, :2], dim=-1) < 0.15)
+        # self._in_place_flag = 0*(torch.norm(self.commands[:, :2], dim=-1) < 0.15)
         # print(self._in_place_flag)
         
         super()._post_physics_step_callback()
@@ -150,14 +151,14 @@ class BHR8Robot(LeggedRobot):
             is_stance = self.leg_phase[:, i] < 0.55
             contact = self.contact_forces[:, self.feet_indices[i], 2] > 1
             res += ~(contact ^ is_stance)
-        res[self._in_place_flag] = 0
+        # res[self._in_place_flag] = 0
         return res
     
     def _reward_feet_swing_height(self):
         contact = torch.norm(self.contact_forces[:, self.feet_indices, :3], dim=2) > 1.
-        pos_error = torch.square(self.feet_pos[:, :, 2] - 0.1) * ~contact
+        pos_error = torch.square(self.feet_pos[:, :, 2] - 0.11) * ~contact
         res = torch.sum(pos_error, dim=(1))
-        res[self._in_place_flag] = 0
+        # res[self._in_place_flag] = 0
         return res
     
     def _reward_alive(self):
@@ -175,14 +176,14 @@ class BHR8Robot(LeggedRobot):
         contacts = self.contact_forces[:, self.feet_indices, 2] > 0.1
         single_contact = torch.sum(1.*contacts, dim=1)==1
         res = 1.*single_contact
-        res[self._in_place_flag] = 0
+        # res[self._in_place_flag] = 0
         return res
 
     def _reward_hip_pos(self):
         return torch.sum(torch.square(self.dof_pos[:,[0,1,5,6]]), dim=1)
 
     def _reward_dof_error(self):
-        return torch.sum(torch.square(self.dof_pos - self.default_dof_pos)[:, [5, 11]], dim=1)
+        return torch.sum(torch.square(self.dof_pos - self.default_dof_pos)[:, [4,5, 10,11]], dim=1)
     
     def _reward_joint_pos(self):
         """
@@ -215,8 +216,8 @@ class BHR8Robot(LeggedRobot):
     def _reward_feet_force(self):
         rew = torch.norm(self.contact_forces[:, self.feet_indices, 2], dim=-1)
         rew[rew < 500] = 0
-        rew[rew > 500] -= 500
-        rew[self._in_place_flag] = 0
+        rew[rew > 500] -= 450
+        # rew[self._in_place_flag] = 0
         # print(rew[self.lookat_id])
         # print(self.dof_names)
         return rew

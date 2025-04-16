@@ -722,7 +722,7 @@ class LeggedRobot(BaseTask):
     def _reward_tracking_lin_vel(self):
         # Tracking of linear velocity commands (xy axes)
         commands = self.commands[:, :2]
-        commands[self._in_place_flag, :] = 0.
+        # commands[self._in_place_flag, :] = 0.
         lin_vel_error = torch.sum(torch.square(commands - self.base_lin_vel[:, :2]), dim=1)
         return torch.exp(-lin_vel_error/self.cfg.rewards.tracking_sigma)
     
@@ -742,7 +742,7 @@ class LeggedRobot(BaseTask):
         rew_airTime = torch.sum((self.feet_air_time - 0.5) * first_contact, dim=1) # reward only on first contact with the ground
         rew_airTime *= torch.norm(self.commands[:, :2], dim=1) > 0.1 #no reward for zero command
         self.feet_air_time *= ~contact_filt
-        rew_airTime[self._in_place_flag] = 0
+        # rew_airTime[self._in_place_flag] = 0
         return rew_airTime
     
     def _reward_stumble(self):

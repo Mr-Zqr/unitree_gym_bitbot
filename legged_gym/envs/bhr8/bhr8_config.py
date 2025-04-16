@@ -24,38 +24,25 @@ class BHR8RoughCfg( LeggedRobotCfg ):
         num_privileged_obs = 50
         num_actions = 12
 
-
     class domain_rand(LeggedRobotCfg.domain_rand):
         randomize_friction = True
         friction_range = [0.1, 1.25]
         randomize_base_mass = True
-        added_mass_range = [-1., 3.]
+        added_mass_range = [-3., 5.]
         push_robots = True
-        push_interval_s = 5
-        max_push_vel_xy = 1.0
+        push_interval_s = 10
+        max_push_vel_xy = 0.3
       
 
     class control( LeggedRobotCfg.control ):
         # PD Drive parameters:
         control_type = 'P'
           # PD Drive parameters:
-        # stiffness = {'hipYaw': 200,
-        #              'hipRoll': 200,
-        #              'hipPitch': 200,
-        #              'knee': 300,
-        #              'ankle': 70,
-        #              }  # [N*m/rad]
-        # damping = {  'hipYaw': 3,
-        #              'hipRoll': 3,
-        #              'hipPitch': 3,
-        #              'knee': 4,
-        #              'ankle': 3,
-        #              }  # [N*m/rad]  # [N*m*s/rad]
-        stiffness = {'hipYaw': 150,
-                     'hipRoll': 150,
-                     'hipPitch': 200,
-                     'knee': 200,
-                     'ankle': 40,
+        stiffness = {'hipYaw': 200,
+                     'hipRoll': 200,
+                     'hipPitch': 300,
+                     'knee': 300,
+                     'ankle': 60,
                      }  # [N*m/rad]
         damping = {  'hipYaw': 2.5,
                      'hipRoll': 2.5,
@@ -63,6 +50,18 @@ class BHR8RoughCfg( LeggedRobotCfg ):
                      'knee': 2,
                      'ankle': 2,
                      }  # [N*m/rad]  # [N*m*s/rad]
+        # stiffness = {'hipYaw': 150,
+        #              'hipRoll': 150,
+        #              'hipPitch': 200,
+        #              'knee': 200,
+        #              'ankle': 40,
+        #              }  # [N*m/rad]
+        # damping = {  'hipYaw': 2.5,
+        #              'hipRoll': 2.5,
+        #              'hipPitch': 2.5,
+        #              'knee': 2,
+        #              'ankle': 2,
+        #              }  # [N*m/rad]  # [N*m*s/rad]
 
         # action scale: target angle = actionScale * action + defaultAngle
         action_scale = 0.25
@@ -70,10 +69,11 @@ class BHR8RoughCfg( LeggedRobotCfg ):
         decimation = 4
 
     class asset( LeggedRobotCfg.asset ):
-        file = '{LEGGED_GYM_ROOT_DIR}/resources/robots/bhr8fc2/bhr8fc2mc.urdf'
+        # file = '{LEGGED_GYM_ROOT_DIR}/resources/robots/bhr8fc2/bhr8fc2mc.urdf'
+        file = '{LEGGED_GYM_ROOT_DIR}/resources/robots/bhr8fc2/bhr8fc2mc_add_pos_limit.urdf'
         name = "bhr8"
         foot_name = "foot"
-        penalize_contacts_on = ["hip", "calf"]
+        penalize_contacts_on = ["hip", "calf", "foot"]
         terminate_after_contacts_on = ["torso"]
         self_collisions = 0 # 1 to disable, 0 to enable...bitwise filter
         flip_visual_attachments = False
@@ -83,32 +83,35 @@ class BHR8RoughCfg( LeggedRobotCfg ):
         base_height_target = 0.88
         min_dist = 0.2
         max_dist = 0.7
+        max_contact_force = 600
         
         class scales( LeggedRobotCfg.rewards.scales ):
-            tracking_lin_vel = 1.0
+            tracking_lin_vel = 1.8
             tracking_ang_vel = 0.5
             lin_vel_z = -2.0
             ang_vel_xy = -0.05
             orientation = -1.0
-            base_height = -4.0
+            base_height = -10.0
             dof_acc = -2.5e-7
-            dof_vel = -0.0001
+            dof_vel = -1e-3
             feet_air_time = 1.0
-            collision = -1.0
-            action_rate = -0.05
+            collision = 0
+            action_rate = -0.01
             dof_pos_limits = -5.0
-            alive = 0.56
-            hip_pos = -1.0
+            alive = 0.17
+            hip_pos = -2.0
             contact_no_vel = -0.2
             feet_swing_height = -20.0
-            contact = 0.38
-            no_fly = 2
-            stand_still_exbody = 5
-            dof_error = 0.0
+            contact = 0.58
+            # no_fly = 5
+            # stand_still_exbody = 5
+            dof_error = -0.5
             # joint_pos = 3.0
             feet_distance = 0.0
-            # feet_contact_forces = -0.01
-            feet_force = -3e-3
+            # feet_contact_forces = -0.005
+            # feet_force = -3e-4 
+
+        only_positive_rewards = False
 
 class BHR8RoughCfgPPO( LeggedRobotCfgPPO ):
     class policy:

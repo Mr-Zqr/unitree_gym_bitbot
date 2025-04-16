@@ -12,7 +12,7 @@ class LeggedRobotCfg(BaseConfig):
         test = False
 
     class terrain:
-        mesh_type = 'trimesh' # "heightfield" # none, plane, heightfield or trimesh
+        mesh_type = 'plane' # "heightfield" # none, plane, heightfield or trimesh
         horizontal_scale = 0.1 # [m]
         vertical_scale = 0.005 # [m]
         border_size = 25 # [m]
@@ -21,7 +21,7 @@ class LeggedRobotCfg(BaseConfig):
         dynamic_friction = 1.0
         restitution = 0.
         # rough terrain only:
-        measure_heights = {'type':'random_uniform_terrain', 'min_height':-0.1, 'max_height':0.1, 'step':0.01, 'downsampled_scale':0.2} 
+        measure_heights = {'type':'random_uniform_terrain', 'min_height':-0.15, 'max_height':0.15, 'step':0.01, 'downsampled_scale':0.2} 
         measured_points_x = [-0.8, -0.7, -0.6, -0.5, -0.4, -0.3, -0.2, -0.1, 0., 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8] # 1mx1.6m rectangle (without center line)
         measured_points_y = [-0.5, -0.4, -0.3, -0.2, -0.1, 0., 0.1, 0.2, 0.3, 0.4, 0.5]
         # selected = False # select a unique terrain type and pass all arguments
@@ -49,12 +49,12 @@ class LeggedRobotCfg(BaseConfig):
         resampling_time = 10. # time before command are changed[s]
         heading_command = True # if true: compute ang vel command from heading error
         class ranges:
-            # lin_vel_x = [-1.0, 1.0] # min max [m/s]
-            # lin_vel_y = [-1.0, 1.0]   # min max [m/s]
-            # ang_vel_yaw = [-1.0, 1.0]    # min max [rad/s]
-            lin_vel_x = [0, 0] # min max [m/s]
-            lin_vel_y = [0, 0]   # min max [m/s]
-            ang_vel_yaw = [0, 0]    # min max [rad/s]
+            lin_vel_x = [-1.0, 1.0] # min max [m/s]
+            lin_vel_y = [-1.0, 1.0]   # min max [m/s]
+            ang_vel_yaw = [-1.0, 1.0]    # min max [rad/s]
+            # lin_vel_x = [0, 0] # min max [m/s]
+            # lin_vel_y = [0, 0]   # min max [m/s]
+            # ang_vel_yaw = [0, 0]    # min max [rad/s]
             heading = [-3.14, 3.14]
 
     class init_state:
@@ -131,7 +131,7 @@ class LeggedRobotCfg(BaseConfig):
         soft_dof_vel_limit = 1.
         soft_torque_limit = 1.
         base_height_target = 1.
-        max_contact_force = 700. # forces above this value are penalized
+        max_contact_force = 600. # forces above this value are penalized
 
     class normalization:
         class obs_scales:
