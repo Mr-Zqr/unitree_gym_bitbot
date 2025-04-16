@@ -92,11 +92,11 @@ class BHR8RoughCfg( LeggedRobotCfg ):
             ang_vel_xy = -0.05
             orientation = -1.0
             base_height = -10.0
-            dof_acc = -2.5e-7
+            dof_acc = -5e-7
             dof_vel = -1e-3
             feet_air_time = 1.0
             collision = 0
-            action_rate = -0.01
+            action_rate = -0.05
             dof_pos_limits = -5.0
             alive = 0.17
             hip_pos = -2.0
@@ -109,7 +109,7 @@ class BHR8RoughCfg( LeggedRobotCfg ):
             # joint_pos = 3.0
             feet_distance = 0.0
             # feet_contact_forces = -0.005
-            # feet_force = -3e-4 
+            feet_force = -3e-3
 
         only_positive_rewards = False
 
