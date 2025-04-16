@@ -51,7 +51,7 @@
     <parent link="torso" />
     <child link="rhip1" />
     <axis xyz="0 0 1" />
-    <limit effort="100.0" velocity="100.0" lower="-3.14" upper="3.14"/>
+    <limit effort="300.0" velocity="21.0" lower="-0.78" upper="0.78"/>
   </joint>
   <link name="rhip2">
     <inertial>
@@ -80,7 +80,7 @@
     <parent link="rhip1" />
     <child link="rhip2" />
     <axis xyz="1 0 0" />
-    <limit effort="100.0" velocity="100.0" lower="-3.14" upper="3.14"/>
+    <limit effort="300.0" velocity="21.0" lower="-0.78" upper="0.78"/>
   </joint>
   <link name="rthigh">
     <inertial>
@@ -109,7 +109,7 @@
     <parent link="rhip2" />
     <child link="rthigh" />
     <axis xyz="0 1 0" />
-    <limit effort="100.0" velocity="100.0" lower="-3.14" upper="3.14"/>
+    <limit effort="300.0" velocity="21.0" lower="-1.4" upper="0.7"/>
   </joint>
   <link name="rcalf">
     <inertial>
@@ -138,7 +138,7 @@
     <parent link="rthigh" />
     <child link="rcalf" />
     <axis xyz="0 1 0" />
-    <limit effort="100.0" velocity="100.0" lower="-3.14" upper="3.14"/>
+    <limit effort="300.0" velocity="21.0" lower="0" upper="1.8"/>
   </joint>
   <link name="rankle">
     <inertial>
@@ -167,7 +167,7 @@
     <parent link="rcalf" />
     <child link="rankle" />
     <axis xyz="0 1 0" />
-    <limit effort="100.0" velocity="100.0" lower="-3.14" upper="3.14"/>
+    <limit effort="300.0" velocity="21.0" lower="-1.0" upper="0.6"/>
   </joint>
   <link name="rfoot">
     <inertial>
@@ -220,7 +220,7 @@
     <parent link="rankle" />
     <child link="rfoot" />
     <axis xyz="1 0 0" />
-    <limit effort="100.0" velocity="100.0" lower="-3.14" upper="3.14"/>
+    <limit effort="300.0" velocity="21" lower="-0.78" upper="0.78"/>
   </joint>
   <link name="lhip1">
     <inertial>
@@ -249,7 +249,7 @@
     <parent link="torso" />
     <child link="lhip1" />
     <axis xyz="0 0 1" />
-    <limit effort="100.0" velocity="100.0" lower="-3.14" upper="3.14"/>
+    <limit effort="300.0" velocity="21.0" lower="-0.78" upper="0.78"/>
   </joint>
   <link name="lhip2">
     <inertial>
@@ -278,7 +278,7 @@
     <parent link="lhip1" />
     <child link="lhip2" />
     <axis xyz="1 0 0" />
-    <limit effort="100.0" velocity="100.0" lower="-3.14" upper="3.14"/>
+    <limit effort="300.0" velocity="21.0" lower="-0.78" upper="0.78"/>
   </joint>
   <link name="lthigh">
     <inertial>
@@ -307,7 +307,7 @@
     <parent link="lhip2" />
     <child link="lthigh" />
     <axis xyz="0 1 0" />
-    <limit effort="100.0" velocity="100.0" lower="-3.14" upper="3.14"/>
+    <limit effort="300.0" velocity="21.0" lower="-1.4" upper="0.7"/>
   </joint>
   <link name="lcalf">
     <inertial>
@@ -336,7 +336,7 @@
     <parent link="lthigh" />
     <child link="lcalf" />
     <axis xyz="0 1 0" />
-    <limit effort="100.0" velocity="100.0" lower="-3.14" upper="3.14"/>
+    <limit effort="300.0" velocity="21.0" lower="0" upper="1.8"/>
   </joint>
   <link name="lankle">
     <inertial>
@@ -365,7 +365,7 @@
     <parent link="lcalf" />
     <child link="lankle" />
     <axis xyz="0 1 0" />
-    <limit effort="100.0" velocity="100.0" lower="-3.14" upper="3.14"/>
+    <limit effort="300.0" velocity="21.0" lower="-1.0" upper="0.6"/>
   </joint>
   <link name="lfoot">
     <inertial>
@@ -418,7 +418,7 @@
     <parent link="lankle" />
     <child link="lfoot" />
     <axis xyz="1 0 0" />
-    <limit effort="100.0" velocity="100.0" lower="-3.14" upper="3.14"/>
+    <limit effort="300.0" velocity="21.0" lower="-0.78" upper="0.78"/>
   </joint>
   <link name="rshoulder1">
     <inertial>
@@ -447,7 +447,7 @@
     <parent link="torso" />
     <child link="rshoulder1" />
     <axis xyz="0 -1 0" />
-    <limit effort="100.0" velocity="100.0" lower="-3.14" upper="3.14"/>
+    <limit effort="300.0" velocity="21.0" lower="-3.14" upper="3.14"/>
   </joint>
   <link name="rshoulder2">
     <inertial>
@@ -476,7 +476,7 @@
     <parent link="rshoulder1" />
     <child link="rshoulder2" />
     <axis xyz="1 0 0" />
-    <limit effort="100.0" velocity="100.0" lower="-3.14" upper="3.14"/>
+    <limit effort="300" lower="-1.57" upper="0" velocity="21.0"/>
   </joint>
   <link name="rbigarm">
     <inertial>
@@ -505,7 +505,7 @@
     <parent link="rshoulder2" />
     <child link="rbigarm" />
     <axis xyz="0 0 1" />
-    <limit effort="100.0" velocity="100.0" lower="-3.14" upper="3.14"/>
+    <limit effort="300" lower="-1.57" upper="1.57" velocity="21.0"/>
   </joint>
   <link name="rforearm">
     <inertial>
@@ -534,7 +534,7 @@
     <parent link="rbigarm" />
     <child link="rforearm" />
     <axis xyz="0 -1 0" />
-    <limit effort="100.0" velocity="100.0" lower="-3.14" upper="3.14"/>
+    <limit effort="300" lower="0.0" upper="2.0" velocity="21.0"/>
   </joint>
   <link name="lshoulder1">
     <inertial>
@@ -563,7 +563,7 @@
     <parent link="torso" />
     <child link="lshoulder1" />
     <axis xyz="0 1 0" />
-    <limit effort="100.0" velocity="100.0" lower="-3.14" upper="3.14"/>
+    <limit effort="300" lower="-3.14" upper="3.14" velocity="21.0"/>
   </joint>
   <link name="lshoulder2">
     <inertial>
@@ -592,7 +592,7 @@
     <parent link="lshoulder1" />
     <child link="lshoulder2" />
     <axis xyz="1 0 0" />
-    <limit effort="100.0" velocity="100.0" lower="-3.14" upper="3.14"/>
+    <limit effort="300" lower="0" upper="1.57" velocity="21.0"/>
   </joint>
   <link name="lbigarm">
     <inertial>
@@ -621,7 +621,7 @@
     <parent link="lshoulder2" />
     <child link="lbigarm" />
     <axis xyz="0 0 1" />
-    <limit effort="100.0" velocity="100.0" lower="-3.14" upper="3.14"/>
+    <limit effort="300" lower="-1.57" upper="1.57" velocity="21.0"/>
   </joint>
   <link name="lforearm">
     <inertial>
@@ -650,6 +650,6 @@
     <parent link="lbigarm" />
     <child link="lforearm" />
     <axis xyz="0 1 0" />
-    <limit effort="100.0" velocity="100.0" lower="-3.14" upper="3.14"/>
+    <limit effort="300" lower="0.0" upper="2.0" velocity="21.0"/>
   </joint>
 </robot>
