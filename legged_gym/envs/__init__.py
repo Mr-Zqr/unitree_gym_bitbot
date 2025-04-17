@@ -14,6 +14,8 @@ from legged_gym.envs.tiangong.tg_env import TGEnv
 # from legged_gym.envs.hhfc.hhfc_env import HhfcEnv
 from legged_gym.envs.bhr8.bhr8_config import BHR8RoughCfg, BHR8RoughCfgPPO
 from legged_gym.envs.bhr8.bhr8_env import BHR8Robot
+from legged_gym.envs.bhr8mlp.bhr8_config import BHR8MLPRoughCfg, BHR8MLPRoughCfgPPO
+from legged_gym.envs.bhr8mlp.bhr8_env import BHR8MLPRobot
 from legged_gym.envs.miniwheel.miniwheel_config import MiniWheelRoughCfg, MiniWheelRoughCfgPPO
 from legged_gym.envs.miniwheel.miniwheel_env import MiniWheelRobot
 from .base.legged_robot import LeggedRobot
@@ -28,3 +30,4 @@ task_registry.register( "bhr8", BHR8Robot, BHR8RoughCfg(), BHR8RoughCfgPPO())
 task_registry.register( "tiangong", TGEnv, TGConfig(), TGConfigPPO())
 # task_registry.register( "hhfc", HhfcEnv, HhfcConfig(), HhfcConfigPPO())
 task_registry.register( "miniwheel", MiniWheelRobot, MiniWheelRoughCfg(), MiniWheelRoughCfgPPO())
+task_registry.register( "bhr8_mlp", BHR8MLPRobot, BHR8MLPRoughCfg(), BHR8MLPRoughCfgPPO())
